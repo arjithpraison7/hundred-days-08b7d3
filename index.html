@@ -1,0 +1,521 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>A little something</title>
+<!-- Private: for Anjali only. Keep it out of search engines and link previews. -->
+<meta name="robots" content="noindex, nofollow, noarchive">
+<meta name="theme-color" content="#5C1A2B">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='30' fill='%235C1A2B'/%3E%3Cpath d='M32 46C14 34 18 20 27 20c4 0 5 3 5 3s1-3 5-3c9 0 13 14-5 26z' fill='%23E3CF9E'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gloock&family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Jost:wght@400;500&display=swap">
+<style>
+  :root {
+    --ivory: #FBF6EA;
+    --paper: #FFFCF4;
+    --ink: #3B2B22;
+    --muted: #7B6A57;
+    --maroon: #5C1A2B;
+    --rose: #C23A4B;
+    --gold: #A8832F;
+    --gold-soft: #E3CF9E;
+    --line: #E8DCC0;
+    --display: "Gloock", "Playfair Display", Georgia, serif;
+    --serif: "EB Garamond", Garamond, "Times New Roman", serif;
+    --label: "Jost", "Helvetica Neue", Arial, sans-serif;
+    color-scheme: light;
+  }
+  *, *::before, *::after { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0;
+    background: radial-gradient(120% 60% at 50% 0%, #fff7e6 0%, var(--ivory) 55%, #f6ecd6 100%);
+    color: var(--ink);
+    font-family: var(--serif);
+    font-size: 19px;
+    line-height: 1.55;
+    min-height: 100vh;
+    padding: env(safe-area-inset-top) 0 env(safe-area-inset-bottom);
+  }
+  main { max-width: 640px; margin: 0 auto; padding: 0 18px 56px; }
+  .kicker {
+    font-family: var(--label); font-size: 12px; letter-spacing: 0.22em; text-transform: uppercase;
+    color: var(--gold); text-align: center; margin: 0;
+  }
+
+  /* hero */
+  .hero { text-align: center; padding: 44px 0 8px; }
+  .hero h1 { margin: 6px 0 0; font-family: var(--display); font-weight: 400; color: var(--maroon);
+    font-size: clamp(22px, 5.4vw, 30px); line-height: 1.2; }
+  .big {
+    font-family: var(--display); color: var(--maroon);
+    font-size: clamp(96px, 30vw, 168px); line-height: 0.95; margin: 6px 0 0;
+    text-shadow: 0 2px 0 var(--gold-soft);
+  }
+  .big-label { font-family: var(--display); font-size: clamp(20px, 5vw, 26px); color: var(--maroon); margin: 0; }
+  .sub { font-style: italic; color: var(--muted); margin: 10px 0 0; }
+  .next { font-family: var(--label); font-size: 13px; letter-spacing: 0.06em; color: var(--muted); margin: 18px 0 0; }
+  .next b { font-weight: 500; color: var(--maroon); font-variant-numeric: tabular-nums; }
+
+  /* the two of us walking toward each other */
+  .walk { position: relative; height: 138px; margin: 28px 4px 10px; }
+  .walk-road { position: absolute; left: 0; right: 0; bottom: 14px; height: 0; border-top: 2px dashed var(--gold-soft); }
+  .walker { position: absolute; bottom: 12px; height: 100px; width: auto; left: 0; will-change: transform; }
+  .walker.groom { transform: scaleX(-1); }
+  .cake-mark { position: absolute; left: 50%; bottom: 8px; width: 46px; transform: translateX(-50%); }
+  .walk-heart { position: absolute; left: 50%; bottom: 110px; font-size: 26px; color: var(--rose);
+    opacity: 0; transform: translate(-50%, 8px) scale(0.6); transition: opacity .4s, transform .4s; }
+  .walk.met .walk-heart { opacity: 1; transform: translate(-50%, 0) scale(1); }
+  .walk-meta { display: flex; justify-content: space-between; font-family: var(--label); font-size: 11px;
+    letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); margin: 0 4px; }
+
+  /* today's reason */
+  .today { background: var(--paper); border: 1px solid var(--line); border-radius: 18px; margin: 30px 0 0;
+    padding: 24px 22px 26px; box-shadow: 0 10px 30px rgba(92, 26, 43, 0.08); text-align: center; position: relative; }
+  .today::before { content: ""; position: absolute; inset: 8px; border: 1px solid var(--gold-soft); border-radius: 12px; pointer-events: none; }
+  .today .num { font-family: var(--label); font-size: 12px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold); margin: 0; }
+  .today h2 { font-family: var(--display); font-weight: 400; color: var(--maroon); font-size: clamp(26px, 6vw, 34px); margin: 2px 0 12px; }
+  .reason { font-size: clamp(21px, 5vw, 25px); line-height: 1.45; margin: 0; white-space: pre-line; }
+  .photo { display: block; width: 100%; max-height: 440px; object-fit: cover; border-radius: 12px; margin: 18px 0 0;
+    border: 6px solid #fff; box-shadow: 0 6px 18px rgba(60, 30, 20, 0.18); }
+  .pending { font-style: italic; color: var(--muted); }
+  .photo[hidden] { display: none; }
+
+  /* the hundred */
+  .section-title { font-family: var(--display); font-weight: 400; font-size: 24px; color: var(--maroon); text-align: center; margin: 44px 0 4px; }
+  .section-note { text-align: center; font-style: italic; color: var(--muted); margin: 0 0 16px; }
+  .grid { display: grid; grid-template-columns: repeat(10, 1fr); gap: 6px; }
+  .cell { aspect-ratio: 1; border-radius: 50%; border: 1px solid var(--line); background: transparent; color: #cdbf9f;
+    font-family: var(--label); font-size: 12px; display: grid; place-items: center; padding: 0; }
+  .cell.open { background: linear-gradient(145deg, #c9a24a, var(--gold)); border-color: var(--gold); color: #fff; cursor: pointer; }
+  .cell.open:hover, .cell.open:focus-visible { transform: scale(1.12); outline: 2px solid var(--maroon); outline-offset: 2px; }
+  .cell.now { box-shadow: 0 0 0 3px rgba(194, 58, 75, 0.35); }
+  .cell.locked { cursor: default; }
+  @media (max-width: 420px) { .grid { grid-template-columns: repeat(10, 1fr); gap: 4px; } .cell { font-size: 10px; } }
+
+  /* birthday */
+  .birthday { display: none; text-align: center; padding: 20px 0 0; }
+  body.bday .birthday { display: block; }
+  body.bday .countdown-only { display: none; }
+  .birthday h1 { font-family: var(--display); font-weight: 400; color: var(--maroon); font-size: clamp(34px, 9vw, 54px); margin: 8px 0 0; line-height: 1.1; }
+  .cake { width: min(300px, 78%); margin: 10px auto 0; display: block; overflow: visible; }
+  .flame { transform-origin: 50% 100%; animation: flicker 1.1s ease-in-out infinite alternate; }
+  .flame:nth-of-type(2n) { animation-duration: 0.9s; animation-delay: .15s; }
+  .flame:nth-of-type(3n) { animation-duration: 1.3s; animation-delay: .3s; }
+  .out .flame { animation: none; opacity: 0; transition: opacity .6s; }
+  .smoke { opacity: 0; }
+  .out .smoke { animation: smoke 1.8s ease-out forwards; }
+  @keyframes flicker { from { transform: scale(1, 1) rotate(-3deg); } to { transform: scale(0.88, 1.12) rotate(3deg); } }
+  @keyframes smoke { 0% { opacity: .0; transform: translateY(0); } 25% { opacity: .55; } 100% { opacity: 0; transform: translateY(-26px); } }
+  .btn { font-family: var(--label); font-size: 14px; letter-spacing: 0.1em; text-transform: uppercase; color: #fff; background: var(--maroon);
+    border: 0; border-radius: 999px; padding: 13px 26px; margin-top: 18px; cursor: pointer; }
+  .btn:hover, .btn:focus-visible { background: #7a2338; }
+  .wish { min-height: 2.4em; font-style: italic; color: var(--maroon); margin: 14px 0 0; }
+
+  dialog { border: 0; border-radius: 18px; padding: 0; max-width: min(92vw, 520px); width: 100%; background: var(--paper); color: var(--ink);
+    box-shadow: 0 24px 60px rgba(30, 10, 10, 0.4); }
+  dialog::backdrop { background: rgba(40, 14, 20, 0.55); }
+  .dlg-body { padding: 26px 22px 24px; text-align: center; }
+  .close { font-family: var(--label); background: none; border: 0; color: var(--muted); font-size: 13px; letter-spacing: 0.12em; text-transform: uppercase; margin-top: 16px; cursor: pointer; padding: 8px 12px; }
+
+  /* gate */
+  [hidden] { display: none !important; }
+  #gate { min-height: 100vh; display: grid; place-items: center; padding: 24px 18px; }
+  .gate-card { background: var(--paper); border: 1px solid var(--line); border-radius: 20px; max-width: 420px; width: 100%;
+    padding: 34px 26px 28px; text-align: center; box-shadow: 0 14px 40px rgba(92, 26, 43, 0.12); position: relative; }
+  .gate-card::before { content: ""; position: absolute; inset: 8px; border: 1px solid var(--gold-soft); border-radius: 14px; pointer-events: none; }
+  .lock { width: 56px; height: 56px; margin: 0 auto 6px; display: block; animation: beat 2.4s ease-in-out infinite; }
+  @keyframes beat { 0%, 100% { transform: scale(1); } 12% { transform: scale(1.1); } 24% { transform: scale(1); } 36% { transform: scale(1.07); } 48% { transform: scale(1); } }
+  .gate-card h1 { font-family: var(--display); font-weight: 400; color: var(--maroon); font-size: clamp(24px, 6vw, 30px); line-height: 1.2; margin: 6px 0 10px; }
+  .gate-ask { font-style: italic; color: var(--muted); margin: 0 0 18px; }
+  #gate-form { display: flex; flex-direction: column; gap: 10px; align-items: center; }
+  #gate-input { width: 100%; max-width: 260px; text-align: center; font-family: var(--label); font-size: 20px; letter-spacing: 0.12em; color: var(--maroon);
+    border: 1.5px solid var(--gold-soft); border-radius: 12px; background: #fff; padding: 12px 14px; }
+  #gate-input:focus { outline: 2px solid var(--maroon); outline-offset: 2px; }
+  #gate-form .btn { margin-top: 4px; }
+  .gate-msg { min-height: 1.6em; margin: 14px 0 0; color: var(--rose); font-style: italic; }
+  .gate-hint { font-family: var(--label); background: none; border: 0; color: var(--gold); font-size: 13px; letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer; padding: 8px 12px; }
+  .gate-hint:hover, .gate-hint:focus-visible { color: var(--maroon); }
+  .gate-clue { min-height: 3.2em; margin: 4px 0 0; color: var(--ink); font-size: 18px; }
+  .shake { animation: shake 0.42s; }
+  @keyframes shake { 20%, 60% { transform: translateX(-7px); } 40%, 80% { transform: translateX(7px); } }
+  @media (prefers-reduced-motion: reduce) { .lock, .shake { animation: none; } }
+
+  footer { text-align: center; margin: 54px 0 0; font-style: italic; color: var(--muted); font-size: 16px; }
+  footer .heart { color: var(--rose); }
+
+  @media (prefers-reduced-motion: reduce) {
+    .flame, .out .smoke { animation: none; }
+    .walker { transition: none !important; }
+  }
+</style>
+</head>
+<body>
+<div id="gate" role="dialog" aria-labelledby="gate-title">
+  <div class="gate-card">
+    <svg class="lock" viewBox="0 0 64 64" aria-hidden="true"><path d="M32 54C10 38 15 18 26 18c4 0 6 3 6 3s2-3 6-3c11 0 16 20-6 36z" fill="#C23A4B"/><circle cx="32" cy="30" r="3.4" fill="#FBF6EA"/><path d="M32 33v7" stroke="#FBF6EA" stroke-width="3" stroke-linecap="round"/></svg>
+    <p class="kicker">for my Geethu</p>
+    <h1 id="gate-title">A little something, just for you</h1>
+    <p class="gate-ask">To open it, tell me the day we promise forever.</p>
+    <form id="gate-form" autocomplete="off">
+      <input id="gate-input" type="text" inputmode="numeric" placeholder="DD-MM-YYYY" aria-label="The date" autocapitalize="off" autocorrect="off" spellcheck="false">
+      <button class="btn" type="submit">Open</button>
+    </form>
+    <p class="gate-msg" id="gate-msg" role="status" aria-live="polite"></p>
+    <button class="gate-hint" id="gate-hint" type="button">Need a clue?</button>
+    <p class="gate-clue" id="gate-clue" aria-live="polite"></p>
+  </div>
+</div>
+
+<main id="app" hidden>
+  <!-- Counting days -->
+  <section class="hero countdown-only" id="hero" aria-live="polite">
+    <p class="kicker" id="kicker">for Anjali</p>
+    <h1 id="hello">Hello, my Chikku</h1>
+    <div class="big" id="days">100</div>
+    <p class="big-label" id="days-label">days until your birthday</p>
+    <p class="sub" id="sub">Thursday, 30 January 2027</p>
+    <p class="next" id="next"></p>
+  </section>
+
+  <!-- Birthday -->
+  <section class="birthday" id="birthday" aria-live="polite">
+    <p class="kicker">30 January</p>
+    <h1 id="bday-title">Happy Birthday, my love</h1>
+    <svg class="cake" id="cake" viewBox="0 0 300 250" role="img" aria-label="A birthday cake with lit candles">
+      <ellipse cx="150" cy="226" rx="128" ry="14" fill="#E3CF9E" opacity=".55"/>
+      <rect x="40" y="150" width="220" height="72" rx="12" fill="#8c2b3e"/>
+      <path d="M40 166c18 14 30-2 48 8s30-4 48 6 30-8 48 4 30-8 48 2 18-4 28-2v-24H40z" fill="#fff6e6"/>
+      <rect x="62" y="104" width="176" height="52" rx="10" fill="#c7485a"/>
+      <path d="M62 120c16 12 26-2 44 6s26-4 44 4 28-8 44 2 28-6 44 2v-18H62z" fill="#fff6e6"/>
+      <g fill="#A8832F"><circle cx="76" cy="196" r="4"/><circle cx="112" cy="204" r="4"/><circle cx="150" cy="198" r="4"/><circle cx="188" cy="204" r="4"/><circle cx="224" cy="196" r="4"/></g>
+      <g id="candles"></g>
+      <g id="flames"></g>
+      <g class="smoke" fill="none" stroke="#9a8d7e" stroke-width="2" stroke-linecap="round"><path d="M110 62c-6-8 6-12 0-20"/><path d="M150 56c-6-8 6-12 0-20"/><path d="M190 62c-6-8 6-12 0-20"/></g>
+    </svg>
+    <p class="wish" id="wish"></p>
+    <button class="btn" id="blow" type="button">Make a wish</button>
+  </section>
+
+  <!-- Walking toward each other -->
+  <div class="walk" id="walk" aria-hidden="true">
+    <div class="walk-road"></div>
+    <svg class="cake-mark" viewBox="0 0 46 46"><rect x="6" y="24" width="34" height="16" rx="4" fill="#8c2b3e"/><rect x="10" y="16" width="26" height="10" rx="3" fill="#c7485a"/><path d="M6 28c4 4 7 0 11 2s7-2 11 0 7-3 12 0v-5H6z" fill="#fff6e6"/><rect x="22" y="8" width="2" height="9" fill="#E3CF9E"/><path d="M23 2c3 3 2 5 0 6-2-1-3-3 0-6z" fill="#e6a23c"/></svg>
+    <span class="walk-heart">&#9829;</span>
+    <img class="walker bride" id="bride" src="images/mini-anjali.png" alt="">
+    <img class="walker groom" id="groom" src="images/mini-arjith.png" alt="">
+  </div>
+  <div class="walk-meta"><span>22 Oct</span><span>30 Jan</span></div>
+
+  <!-- Today's reason -->
+  <section class="today" id="today" aria-live="polite">
+    <p class="num" id="today-num"></p>
+    <h2 id="today-title"></h2>
+    <p class="reason" id="today-text"></p>
+    <img class="photo" id="today-photo" alt="" hidden>
+  </section>
+
+  <h2 class="section-title">The hundred</h2>
+  <p class="section-note" id="grid-note">One new reason opens every day. Tap a gold circle to read it again.</p>
+  <div class="grid" id="grid"></div>
+
+  <footer>Every one of them is true, and there are more than a hundred. <span class="heart">&#9829;</span><br>Yours, Arjith</footer>
+</main>
+
+<dialog id="dlg" aria-labelledby="dlg-title">
+  <div class="dlg-body">
+    <p class="kicker" id="dlg-num"></p>
+    <h2 id="dlg-title" style="font-family:var(--display);font-weight:400;color:var(--maroon);margin:2px 0 10px;font-size:26px"></h2>
+    <p class="reason" id="dlg-text"></p>
+    <img class="photo" id="dlg-photo" alt="" hidden>
+    <button class="close" id="dlg-close" type="button">Close</button>
+  </div>
+</dialog>
+
+<script>
+window.__start = function () {
+  "use strict";
+
+  var NAME = "Chikku";                 // how the page addresses her; change here
+  var START = "2026-10-22";            // reason 1 opens on this date (India time)
+  var BIRTHDAY = "2027-01-30";         // the countdown runs to midnight at the start of this day (India time)
+  var TZ = "Asia/Kolkata";
+  var TOTAL = 100;
+  var DAY = 86400000;
+
+  function $(id) { return document.getElementById(id); }
+  function pad(n) { return (n < 10 ? "0" : "") + n; }
+  function ymdToUtc(s) { var p = s.split("-"); return Date.UTC(+p[0], +p[1] - 1, +p[2]); }
+  function istDate(now) {
+    return new Intl.DateTimeFormat("en-CA", { timeZone: TZ, year: "numeric", month: "2-digit", day: "2-digit" }).format(now);
+  }
+  function longDate(ymd) {
+    return new Date(ymdToUtc(ymd)).toLocaleDateString("en-GB", { timeZone: "UTC", weekday: "long", day: "numeric", month: "long", year: "numeric" });
+  }
+  function shortDate(ymd) {
+    return new Date(ymdToUtc(ymd)).toLocaleDateString("en-GB", { timeZone: "UTC", day: "numeric", month: "short" });
+  }
+  function addDays(ymd, n) { return new Date(ymdToUtc(ymd) + n * DAY).toISOString().slice(0, 10); }
+
+  // reasons.js holds one reason per line: "text" or "text | photo.jpg". A blank line means it isn't written yet.
+  var raw = (window.REASONS_TEXT || "").split("\n");
+  var reasons = [];
+  for (var i = 0; i < TOTAL; i++) {
+    var line = (raw[i] || "").trim();
+    var bar = line.lastIndexOf("|");
+    var text = line, photo = "";
+    if (bar > -1 && /\.(jpe?g|png|webp)\s*$/i.test(line.slice(bar + 1))) {
+      text = line.slice(0, bar).trim();
+      photo = line.slice(bar + 1).trim();
+    }
+    reasons.push({ text: text.replace(/\\n/g, "\n"), photo: photo });
+  }
+
+  // ?today=2026-12-05 pretends it's that India date (for testing)
+  var params = new URLSearchParams(location.search);
+  var fake = params.get("today");
+  var fakeOk = fake && /^\d{4}-\d{2}-\d{2}$/.test(fake);
+
+  function nowMs() {
+    if (!fakeOk) return Date.now();
+    return Date.parse(fake + "T" + new Intl.DateTimeFormat("en-GB", { timeZone: TZ, hour: "2-digit", minute: "2-digit", second: "2-digit", hour12: false }).format(new Date()) + "+05:30");
+  }
+
+  var targetMs = Date.parse(BIRTHDAY + "T00:00:00+05:30");
+  var startMs = Date.parse(START + "T00:00:00+05:30");
+
+  // grid
+  var grid = $("grid");
+  var cells = [];
+  for (var n = 1; n <= TOTAL; n++) {
+    var b = document.createElement("button");
+    b.type = "button";
+    b.className = "cell locked";
+    b.textContent = n;
+    b.disabled = true;
+    b.setAttribute("aria-label", "Reason " + n + ", opens " + shortDate(addDays(START, n - 1)));
+    b.dataset.n = n;
+    grid.appendChild(b);
+    cells.push(b);
+  }
+  grid.addEventListener("click", function (e) {
+    var t = e.target.closest(".cell.open");
+    if (t) openDialog(+t.dataset.n);
+  });
+
+  // dialog
+  var dlg = $("dlg");
+  function fillCard(prefix, n) {
+    var r = reasons[n - 1];
+    $(prefix + "-num").textContent = "Reason " + n + " of " + TOTAL;
+    var textEl = $(prefix + "-text");
+    textEl.textContent = r.text || "This one is still being written.";
+    textEl.classList.toggle("pending", !r.text);
+    var ph = $(prefix + "-photo");
+    if (r.photo) {
+      var want = r.photo;
+      ph.dataset.want = want; ph.hidden = true; ph.alt = "";
+      window.__photo(want).then(function (u) { if (ph.dataset.want === want) { ph.src = u; ph.hidden = false; } }).catch(function () {});
+    } else { ph.dataset.want = ""; ph.hidden = true; ph.removeAttribute("src"); }
+  }
+  function openDialog(n) {
+    fillCard("dlg", n);
+    $("dlg-title").textContent = shortDate(addDays(START, n - 1));
+    if (dlg.showModal) dlg.showModal(); else dlg.setAttribute("open", "");
+  }
+  $("dlg-close").addEventListener("click", function () { dlg.close ? dlg.close() : dlg.removeAttribute("open"); });
+  dlg.addEventListener("click", function (e) { if (e.target === dlg) dlg.close(); });
+
+  // walkers
+  var walk = $("walk"), bride = $("bride"), groom = $("groom");
+  function placeWalkers(p) {
+    var w = walk.clientWidth, bw = bride.offsetWidth, gw = groom.offsetWidth;
+    var gap = 6, cake = 23;                         // they stop on either side of the cake
+    var brideEnd = w / 2 - cake - gap - bw;
+    var groomEnd = w / 2 + cake + gap;
+    var bx = brideEnd * p;
+    var gx = (w - gw) - ((w - gw) - groomEnd) * p;
+    var bob = Math.sin(p * 120) * 2;
+    bride.style.transform = "translate3d(" + bx.toFixed(1) + "px," + (-Math.abs(bob)).toFixed(1) + "px,0)";
+    groom.style.transform = "translate3d(" + gx.toFixed(1) + "px," + (-Math.abs(Math.cos(p * 120) * 2)).toFixed(1) + "px,0) scaleX(-1)";
+    walk.classList.toggle("met", p >= 0.995);
+  }
+
+  // candles
+  (function () {
+    var xs = [86, 118, 150, 182, 214], c = "", f = "";
+    xs.forEach(function (x, k) {
+      c += '<rect x="' + (x - 3) + '" y="76" width="6" height="30" rx="2" fill="' + (k % 2 ? "#E3CF9E" : "#fff6e6") + '" stroke="#c9a24a" stroke-width="1"/>';
+      f += '<path class="flame" d="M' + x + ' 52c7 9 7 16 0 22-7-6-7-13 0-22z" fill="#f5a623"/><path class="flame" d="M' + x + ' 60c3 5 3 8 0 11-3-3-3-6 0-11z" fill="#fff0b3"/>';
+    });
+    $("candles").innerHTML = c; $("flames").innerHTML = f;
+  })();
+  var wishes = ["Make it a big one.", "Whatever it is, I'm already on it.", "Keep it a secret, and it comes true.", "I hope it has us in it."];
+  $("blow").addEventListener("click", function () {
+    var cake = $("cake");
+    if (cake.classList.contains("out")) {
+      cake.classList.remove("out");
+      $("wish").textContent = "";
+      $("blow").textContent = "Make a wish";
+      return;
+    }
+    cake.classList.add("out");
+    $("wish").textContent = wishes[Math.floor(Math.random() * wishes.length)];
+    $("blow").textContent = "Light them again";
+  });
+
+  var last = {};
+  function tick() {
+    var now = nowMs();
+    var today = fakeOk ? fake : istDate(new Date(now));
+    var started = today >= START;
+    var bday = today >= BIRTHDAY;
+    var dayIdx = bday ? TOTAL : Math.max(0, Math.round((ymdToUtc(today) - ymdToUtc(START)) / DAY) + 1);
+    var open = Math.min(dayIdx, TOTAL);
+
+    document.body.classList.toggle("bday", bday);
+    $("hello").textContent = "Hello, my " + NAME;
+    $("bday-title").textContent = "Happy Birthday, my " + NAME;
+
+    if (!bday) {
+      var daysLeft = Math.ceil((targetMs - now) / DAY);
+      if (!started) {
+        $("days").textContent = Math.ceil((startMs - now) / DAY) <= 1 ? "Tomorrow" : "Soon";
+        $("days").style.fontSize = "clamp(54px, 15vw, 88px)";
+        $("days-label").textContent = "something starts for you";
+        $("sub").textContent = "Your first reason opens on " + longDate(START);
+        $("next").innerHTML = "";
+      } else {
+        $("days").style.fontSize = "";
+        $("days").textContent = daysLeft;
+        $("days-label").textContent = daysLeft === 1 ? "day until your birthday" : "days until your birthday";
+        $("sub").textContent = longDate(BIRTHDAY);
+        var nextMs = Date.parse(addDays(today, 1) + "T00:00:00+05:30");
+        var left = Math.max(0, nextMs - now), h = Math.floor(left / 3600000), m = Math.floor(left / 60000) % 60, s = Math.floor(left / 1000) % 60;
+        $("next").innerHTML = open < TOTAL
+          ? "Your next reason opens in <b>" + pad(h) + ":" + pad(m) + ":" + pad(s) + "</b>"
+          : "Tomorrow, you turn another year more wonderful.";
+      }
+    }
+
+    var p = Math.min(1, Math.max(0, (now - startMs) / (targetMs - startMs)));
+    if (bday) p = 1;
+    placeWalkers(started ? p : 0);
+
+    if (last.open !== open || last.bday !== bday) {
+      var t = $("today");
+      if (open === 0) {
+        t.hidden = true;
+      } else {
+        t.hidden = false;
+        var n = bday ? TOTAL : open;
+        fillCard("today", n);
+        $("today-title").textContent = bday ? "The last one" : (open === TOTAL ? "Today's reason" : "Today's reason");
+        $("today-num").textContent = "Reason " + n + " of " + TOTAL + " · " + shortDate(addDays(START, n - 1));
+      }
+      cells.forEach(function (c, k) {
+        var no = k + 1, isOpen = no <= open;
+        c.classList.toggle("open", isOpen);
+        c.classList.toggle("locked", !isOpen);
+        c.classList.toggle("now", isOpen && no === open && !bday);
+        c.disabled = !isOpen;
+      });
+      $("grid-note").textContent = bday ? "All hundred are open now. Tap any one to read it again." :
+        (open === 0 ? "One reason opens every day, starting " + shortDate(START) + "." : "One new reason opens every day. Tap a gold circle to read it again.");
+      last.open = open; last.bday = bday;
+    }
+  }
+
+  tick();
+  setInterval(tick, 1000);
+  window.addEventListener("resize", tick);
+};
+</script>
+<script>
+(function () {
+  "use strict";
+  // The reasons and photos are AES-GCM encrypted (key from PBKDF2 of the date); only the encrypted files are published.
+  var enc = new TextEncoder(), dec = new TextDecoder();
+  var key = null, vaultInfo = null, photoCache = {};
+  function b64(s) { var bin = atob(s), a = new Uint8Array(bin.length); for (var i = 0; i < bin.length; i++) a[i] = bin.charCodeAt(i); return a; }
+  function pad(n, w) { n = String(n); while (n.length < w) n = "0" + n; return n; }
+
+  // "27-01-2027", "27/1/2027", "27012027", "270127" all mean the same date
+  function canon(input) {
+    var t = String(input || "").trim(), parts = t.split(/\D+/).filter(Boolean), d, m, y;
+    if (parts.length === 3) { d = parts[0]; m = parts[1]; y = parts[2]; }
+    else if (parts.length === 1 && parts[0].length === 8) { d = parts[0].slice(0, 2); m = parts[0].slice(2, 4); y = parts[0].slice(4); }
+    else if (parts.length === 1 && parts[0].length === 6) { d = parts[0].slice(0, 2); m = parts[0].slice(2, 4); y = parts[0].slice(4); }
+    else return t.toLowerCase();
+    if (y.length === 2) y = "20" + y;
+    return pad(d, 2) + "-" + pad(m, 2) + "-" + y;
+  }
+  async function derive(pw, info) {
+    var km = await crypto.subtle.importKey("raw", enc.encode(pw), "PBKDF2", false, ["deriveKey"]);
+    return crypto.subtle.deriveKey({ name: "PBKDF2", salt: b64(info.salt), iterations: info.iter, hash: "SHA-256" }, km, { name: "AES-GCM", length: 256 }, false, ["decrypt"]);
+  }
+  async function tryUnlock(raw) {
+    if (!vaultInfo) vaultInfo = await (await fetch("vault.json", { cache: "no-store" })).json();
+    var k = await derive(canon(raw), vaultInfo);
+    var plain = await crypto.subtle.decrypt({ name: "AES-GCM", iv: b64(vaultInfo.iv) }, k, b64(vaultInfo.ct));   // throws if wrong
+    key = k;
+    window.REASONS_TEXT = dec.decode(plain);
+    return canon(raw);
+  }
+  window.__photo = async function (name) {
+    if (photoCache[name]) return photoCache[name];
+    var buf = new Uint8Array(await (await fetch("photos/" + encodeURIComponent(name) + ".enc")).arrayBuffer());
+    var plain = await crypto.subtle.decrypt({ name: "AES-GCM", iv: buf.slice(0, 12) }, key, buf.slice(12));
+    return (photoCache[name] = URL.createObjectURL(new Blob([plain], { type: "image/jpeg" })));
+  };
+
+  function open() {
+    document.getElementById("gate").hidden = true;
+    document.getElementById("app").hidden = false;
+    document.title = "100 days \u00b7 for Anjali";
+    window.__start();
+  }
+
+  var form = document.getElementById("gate-form"), input = document.getElementById("gate-input"), msg = document.getElementById("gate-msg");
+  var hintBtn = document.getElementById("gate-hint"), clue = document.getElementById("gate-clue"), card = document.querySelector(".gate-card");
+  var clues = [
+    "It's the day I'll say \u201cI do\u201d, in a church, at 10:30 in the morning.",
+    "Our hashtag was born for this day: #PongalWedsPuttu.",
+    "It's a Wednesday in the first month of the year, and it comes just before your birthday.",
+    "Type it as day, month, year \u2013 like 14-09-2026, the day we got engaged."
+  ], ci = 0;
+  hintBtn.addEventListener("click", function () {
+    clue.textContent = clues[ci];
+    ci = (ci + 1) % clues.length;
+    hintBtn.textContent = "Another clue?";
+  });
+  var busy = false;
+  form.addEventListener("submit", async function (e) {
+    e.preventDefault();
+    if (busy || !input.value.trim()) return;
+    busy = true; msg.textContent = "Checking\u2026";
+    try {
+      var pw = await tryUnlock(input.value);
+      try { localStorage.setItem("hd-pw", pw); } catch (x) {}
+      open();
+    } catch (err) {
+      msg.textContent = "Hmm, that's not the day. Try again, my love.";
+      card.classList.remove("shake"); void card.offsetWidth; card.classList.add("shake");
+      input.select();
+    }
+    busy = false;
+  });
+
+  // remembered on this device? then skip the gate
+  (async function () {
+    var saved = null;
+    try { saved = localStorage.getItem("hd-pw"); } catch (x) {}
+    if (saved) { try { await tryUnlock(saved); open(); return; } catch (x) { try { localStorage.removeItem("hd-pw"); } catch (y) {} } }
+    input.focus();
+  })();
+})();
+</script>
+</body>
+</html>
