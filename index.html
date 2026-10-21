@@ -401,7 +401,7 @@ window.__start = function () {
     var bx = brideEnd * p;
     var gx = (w - gw) - ((w - gw) - groomEnd) * p;
     var bob = Math.sin(p * 120) * 2;
-    bride.style.transform = "translate3d(" + bx.toFixed(1) + "px," + (-Math.abs(bob)).toFixed(1) + "px,0)";
+    bride.style.transform = "translate3d(" + bx.toFixed(1) + "px," + (-Math.abs(bob)).toFixed(1) + "px,0) scaleX(-1)";
     groom.style.transform = "translate3d(" + gx.toFixed(1) + "px," + (-Math.abs(Math.cos(p * 120) * 2)).toFixed(1) + "px,0) scaleX(-1)";
     walk.classList.toggle("met", p >= 0.995);
   }
