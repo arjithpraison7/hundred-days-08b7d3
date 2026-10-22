@@ -89,6 +89,9 @@
     border: 6px solid #fff; box-shadow: 0 6px 18px rgba(60, 30, 20, 0.18); }
   .pending { font-style: italic; color: var(--muted); }
   .photo[hidden] { display: none; }
+  .teaser { margin: 22px 4px 0; padding-top: 16px; border-top: 1px dashed var(--gold-soft); }
+  .teaser .num { margin-bottom: 4px; }
+  .teaser-text { font-style: italic; color: var(--maroon); font-size: 19px; line-height: 1.45; margin: 0; white-space: pre-line; }
 
   /* the hundred */
   .section-title { font-family: var(--display); font-weight: 400; font-size: 24px; color: var(--maroon); text-align: center; margin: 44px 0 4px; }
@@ -277,6 +280,10 @@
     <h2 id="today-title"></h2>
     <p class="reason" id="today-text"></p>
     <img class="photo" id="today-photo" alt="" hidden>
+    <div class="teaser" id="teaser" hidden>
+      <p class="num">A little clue for tomorrow</p>
+      <p class="teaser-text" id="teaser-text"></p>
+    </div>
   </section>
 
   <h2 class="section-title">The hundred</h2>
@@ -321,7 +328,8 @@ window.__start = function () {
   }
   function addDays(ymd, n) { return new Date(ymdToUtc(ymd) + n * DAY).toISOString().slice(0, 10); }
 
-  // reasons.js holds one reason per line: "text" or "text | photo.jpg". A blank line means it isn't written yet.
+  // The vault holds one reason per line: "text" or "text | photo.jpg". A blank line means it isn't written yet.
+  // After the 100 reasons come 100 clues: clue n hints at reason n and shows the day before it opens.
   var raw = (window.REASONS_TEXT || "").split("\n");
   var reasons = [];
   for (var i = 0; i < TOTAL; i++) {
@@ -332,7 +340,7 @@ window.__start = function () {
       text = line.slice(0, bar).trim();
       photo = line.slice(bar + 1).trim();
     }
-    reasons.push({ text: text.replace(/\\n/g, "\n"), photo: photo });
+    reasons.push({ text: text.replace(/\\n/g, "\n"), photo: photo, clue: (raw[TOTAL + i] || "").trim().replace(/\\n/g, "\n") });
   }
 
   // ?today=2026-12-05 pretends it's that India date (for testing)
@@ -618,6 +626,9 @@ window.__start = function () {
         fillCard("today", n);
         $("today-title").textContent = bday ? "The last one" : (open === TOTAL ? "Today's reason" : "Today's reason");
         $("today-num").textContent = "Reason " + n + " of " + TOTAL + " · " + shortDate(addDays(START, n - 1));
+        var clue = !bday && open < TOTAL ? reasons[open].clue : "";   // reasons[open] is tomorrow's
+        $("teaser-text").textContent = clue;
+        $("teaser").hidden = !clue;
       }
       cells.forEach(function (c, k) {
         var no = k + 1, isOpen = no <= open;
